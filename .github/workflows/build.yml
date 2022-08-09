@@ -18,7 +18,7 @@ jobs:
       matrix:
         sdk_url:
           - https://downloads.openwrt.org/releases/21.02.2/targets/x86/64/openwrt-sdk-21.02.2-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz
-          - https://downloads.openwrt.org/releases/21.02.2/targets/rockchip/armv8/openwrt-sdk-21.02.2-rockchip-armv8_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+          - https://downloads.openwrt.org/releases/21.02-SNAPSHOT/targets/mvebu/cortexa53/openwrt-sdk-21.02-SNAPSHOT-mvebu-cortexa53_gcc-8.4.0_musl.Linux-x86_64.tar.xz
 
     steps:
     - name: Checkout
@@ -60,8 +60,8 @@ jobs:
         cd $sdk
         [[ $url == *'targets/x86'* ]] && sed -i 's/-Os -pipe/-O3 -pipe -march=x86-64/g' Config-build.in
         [[ $url == *'targets/x86'* ]] && sed -i 's/-Os -pipe/-O3 -pipe -march=x86-64/g' include/target.mk
-        [[ $url == *'targets/rockchip'* ]] && sed -i 's/-Os -pipe/-O3 -pipe -march=armv7-a+crypto+crc -mcpu=cortex-a53+crypto+crc -mtune=cortex-a53/g' Config-build.in
-        [[ $url == *'targets/rockchip'* ]] && sed -i 's/-Os -pipe/-O3 -pipe -march=armv7-a+crypto+crc -mcpu=cortex-a53+crypto+crc -mtune=cortex-a53/g' include/target.mk
+        [[ $url == *'targets/mvebu'* ]] && sed -i 's/-Os -pipe/-O3 -pipe -march=armv7-a+crypto+crc -mcpu=cortex-a53+crypto+crc -mtune=cortex-a53/g' Config-build.in
+        [[ $url == *'targets/mvebu'* ]] && sed -i 's/-Os -pipe/-O3 -pipe -march=armv7-a+crypto+crc -mcpu=cortex-a53+crypto+crc -mtune=cortex-a53/g' include/target.mk
         echo 'CONFIG_PACKAGE_n2n-edge=m' > .config
         echo 'CONFIG_PACKAGE_n2n-supernode=m' >> .config
         make defconfig
