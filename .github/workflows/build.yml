@@ -1,4 +1,4 @@
-name: Build n2n for OpenWrt
+name: Build n2n for OpenWrt clark
 
 on:
   push:
