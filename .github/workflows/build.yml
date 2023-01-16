@@ -96,15 +96,17 @@ jobs:
         done
         md5sum artifact/*.ipk > release.txt
         echo "Please check the stock releases at https://downloads.openwrt.org/releases/" >> release.txt
-    - name: Upload firmware to release
-      uses: softprops/action-gh-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
       with:
-        name: ${{ env.IPKG_VERSION }}
-        tag_name: ${{ env.IPKG_VERSION }}
-        body_path: release.txt
-        files: artifact/**/*
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file:  artifact/**/*
+        tag: ${{ github.ref }}
+        release_name: ${{ github.ref }}
+        overwrite: true
+        file_glob: true
+        body: ""
 
     - name: Delete Artifacts
       uses: geekyeggo/delete-artifact@v1
